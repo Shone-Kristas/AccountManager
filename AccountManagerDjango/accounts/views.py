@@ -1,4 +1,4 @@
-from rest_framework import status
+from rest_framework import status, generics, filters
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework.exceptions import ValidationError
@@ -48,3 +48,14 @@ class UserDetailView(APIView):
             return Response(serializer.data, status=status.HTTP_200_OK)
         except User.DoesNotExist:
             return Response({"error": "User not found"}, status=status.HTTP_404_NOT_FOUND)
+
+class UserListView(generics.ListAPIView):
+    serializer_class = UserSerializer
+    queryset = User.objects.all()
+    filter_backends = [filters.SearchFilter]
+
+    search_fields = ['surname', 'name', 'patronymic', 'phone', 'email']
+
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        return queryset
