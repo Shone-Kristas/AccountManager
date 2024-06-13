@@ -3,7 +3,8 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework.exceptions import ValidationError
 
-from .serializers import mailSerializer, mobileSerializer, webSerializer
+from .models import User
+from .serializers import mailSerializer, mobileSerializer, webSerializer, UserSerializer
 from .validators import validate_mail, validate_mobile, validate_web
 
 
@@ -38,3 +39,12 @@ class UsersAPIView(APIView):
 
         except ValidationError as e:
             return Response({"error": str(e)}, status=status.HTTP_400_BAD_REQUEST)
+
+class UserDetailView(APIView):
+    def get(self, request, pk):
+        try:
+            user = User.objects.get(pk=pk)
+            serializer = UserSerializer(user)
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        except User.DoesNotExist:
+            return Response({"error": "User not found"}, status=status.HTTP_404_NOT_FOUND)

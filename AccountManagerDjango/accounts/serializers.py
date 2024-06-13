@@ -3,6 +3,11 @@ from rest_framework import serializers
 from .models import User
 
 
+class UserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = '__all__'
+
 class mailSerializer(serializers.ModelSerializer):
     surname = serializers.CharField(required=False, allow_blank=True)
     patronymic = serializers.CharField(required=False, allow_blank=True)
