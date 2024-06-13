@@ -1,1 +1,4 @@
 Django
+djangorestframework
+python-dotenv
+psycopg2-binary
