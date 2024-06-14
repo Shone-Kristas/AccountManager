@@ -27,5 +27,5 @@ jobs:
         pip install -r requirements.txt
     - name: Run Tests
       run: |
-        cd AccountManager
+        cd AccountManagerDjango
         python manage.py test
