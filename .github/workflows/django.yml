@@ -40,7 +40,6 @@ jobs:
 
     - name: Run tests
       run: |
-        cd AccountManager
         python manage.py test
       env:
         DB_NAME: postgres
